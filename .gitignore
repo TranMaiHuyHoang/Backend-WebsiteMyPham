@@ -1,4 +1,37 @@
+# Dependencies
 node_modules/
+
+# Environment variables & secrets
 .env
 .env.*
 !.env.example
+
+# Documentation & internal guides
+HUONG_DAN_DU_AN.md
+*HUONG_DAN*.md
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Editor & IDE directories
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Temporary & Upload folders
+tmp/
+temp/
+uploads/
