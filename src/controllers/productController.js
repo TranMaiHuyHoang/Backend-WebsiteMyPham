@@ -8,7 +8,7 @@ class ProductController {
             // const { title, description, } = req.body // destructring
 
             // check categoryId xem có tồn tại hay không ?
-            console.log('newProduct.categoryId:', newProduct.categoryId);
+            // console.log('newProduct.categoryId:', newProduct.categoryId);
             const categoryExists = await categoryModel.findById(newProduct.categoryId);
 
             if (!categoryExists) {
@@ -63,9 +63,55 @@ class ProductController {
     }
 
     async getListProduct(req, res) {
+        const { page = 1, limit = 10, keyword = '', categoryId, minPrice, maxPrice, sort = -1 } = req.body;
         try {
-            const products = await productModel.find().populate('category').sort({ createdAt: -1 }); // -1 newest , 1 oldest
-            res.status(200).json({ message: 'Get list product successfully', data: products });
+            const filter = {};
+
+            if (keyword.trim()) {
+                filter.name = {
+                    $regex: keyword.trim(),
+                    $options: 'i',
+
+                };
+            }
+
+            if (categoryId) {
+                filter.category = categoryId;
+            }
+
+            if (minPrice !== undefined || maxPrice !== undefined) {
+                filter.price = {};
+
+                if (minPrice !== undefined) filter.price.$gte = minPrice;
+                if (maxPrice !== undefined) filter.price.$lte = maxPrice;
+            }
+
+            const skip = (page - 1) * limit;
+
+            const sortOrder = Number(sort) === 1 ? 1 : -1;
+
+            const [products, total] = await Promise.all([
+                productModel.find(filter)
+                    .populate('category')
+                    .sort({ createdAt: sortOrder })
+                    .skip(skip)
+                    .limit(limit)
+                    .lean(),
+
+                productModel.countDocuments(filter),
+
+            ]);
+
+            res.status(200).json({
+                message: 'Get list product successfully',
+                data: products,
+                pagination: {
+                    total,
+                    page,
+                    limit,
+                    totalPages: Math.ceil(total / limit),
+                }
+            });
         } catch (error) {
             console.log(error);
             res.status(500).json(error);

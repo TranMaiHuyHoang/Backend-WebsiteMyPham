@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.post("/create", productController.createProduct);
 
-router.get("/list", productController.getListProduct);
+router.post("/list", productController.getListProduct);
 
 router.put("/update/:productId", productController.updateProduct);
 
