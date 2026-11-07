@@ -3,6 +3,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const productRoute = require('./routes/productRoute');
 const postRoute = require('./routes/postRoute');
+const categoryRoute = require('./routes/categoryRoute');
 const app = express();
 
 app.use(cors());
@@ -12,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/products', productRoute);
 app.use('/api/posts', postRoute);
-
+app.use('/api/category', categoryRoute);
 app.get('/api/health', (req, res) => {
     res.status(200).json({
         success: true,
