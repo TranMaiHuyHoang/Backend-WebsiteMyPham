@@ -68,7 +68,7 @@ class ProductController {
             const filter = {};
 
             if (keyword.trim()) {
-                filter.name = {
+                filter.title = {
                     $regex: keyword.trim(),
                     $options: 'i',
 
