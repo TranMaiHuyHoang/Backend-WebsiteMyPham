@@ -11,6 +11,8 @@ router.get('/list', postController.getListPost);
 //3 lấy chi tiết bài viết
 router.get('/detail/:id', postController.getPostDetail);
 
+
+// 4 Cập nhật bài viết
 router.put('/:postId', postController.updatePost);
 
 module.exports = router;

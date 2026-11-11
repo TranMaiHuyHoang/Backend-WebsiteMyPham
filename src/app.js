@@ -5,6 +5,8 @@ const productRoute = require('./routes/productRoute');
 const postRoute = require('./routes/postRoute');
 const categoryRoute = require('./routes/categoryRoute');
 const reviewRoute = require('./routes/reviewRoute');
+const errorHandle = require("./middlewares/errorHandler");
+const errorHandler = require('./middlewares/errorHandler');
 const app = express();
 
 app.use(cors());
@@ -23,8 +25,6 @@ app.get('/api/health', (req, res) => {
         message: 'Website My Pham API is running'
     });
 });
-
-
-
+app.use(errorHandler);
 
 module.exports = app;
