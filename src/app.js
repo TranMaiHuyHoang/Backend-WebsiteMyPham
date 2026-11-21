@@ -5,8 +5,9 @@ const productRoute = require('./routes/productRoute');
 const postRoute = require('./routes/postRoute');
 const categoryRoute = require('./routes/categoryRoute');
 const reviewRoute = require('./routes/reviewRoute');
-const errorHandle = require("./middlewares/errorHandler");
-const errorHandler = require('./middlewares/errorHandler');
+const authRoute = require('./routes/authRoute');
+const errorHandler = require("./middlewares/errorHandler");
+
 const app = express();
 
 app.use(cors());
@@ -18,7 +19,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/products', productRoute);
 app.use('/api/posts', postRoute);
 app.use('/api/category', categoryRoute);
-app.use('/api/review', reviewRoute)
+app.use('/api/review', reviewRoute);
+app.use('/api/auth', authRoute);
 app.get('/api/health', (req, res) => {
     res.status(200).json({
         success: true,
