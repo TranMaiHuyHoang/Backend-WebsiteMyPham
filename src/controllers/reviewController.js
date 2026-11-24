@@ -34,6 +34,10 @@ class ReviewController {
 
     createReview = asyncHandler(async (req, res) => {
         const newReview = req.body;
+        const userId = req.user.userId;
+        // const { userId } = req.user
+
+        console.log("userId", userId)
 
         const productExists = await productModel.findById(newReview.productId);
         console.log('newReview', newReview)
@@ -44,7 +48,8 @@ class ReviewController {
 
         const review = await reviewModel.create({
             ...newReview,
-            product: newReview.productId
+            product: newReview.productId,
+            user: userId
         });
 
         return ApiResponse.success(res, {
@@ -67,6 +72,7 @@ class ReviewController {
             }
 
             const reviews = await reviewModel.find({ product: productId })
+                .populate("user")
                 .sort({ createdAt: -1 }); // Sắp xếp đánh giá mới nhất lên đầu
 
             return ApiResponse.success(res, {

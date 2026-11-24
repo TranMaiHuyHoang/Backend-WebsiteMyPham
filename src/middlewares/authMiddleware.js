@@ -15,6 +15,8 @@ const authMiddleware = asyncHandler(async (req, res, next) => {
     // Xác minh Token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
+    console.log("decoded", decoded)
+
     // Gắn thông tin user vào request
     req.user = decoded;
 

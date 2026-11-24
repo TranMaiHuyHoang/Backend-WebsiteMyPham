@@ -59,7 +59,7 @@ class AuthController {
         // Tạo JWT
         const token = jwt.sign(
             {
-                id: user._id,
+                userId: user._id,
                 role: user.role
             },
             process.env.JWT_SECRET || 'website_my_pham_secret_key_2026@#!',
