@@ -4,7 +4,11 @@ const authMiddleware = require("../middlewares/authMiddleware");
 const authorizeRoles = require("../middlewares/authorMiddleware");
 const router = express.Router();
 
-router.post("/create", productController.createProduct);
+router.post(
+    "/create",
+    authMiddleware,
+    productController.createProduct
+);
 
 router.post(
     "/list",

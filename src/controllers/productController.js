@@ -5,6 +5,7 @@ class ProductController {
     async createProduct(req, res) {
         try {
             const newProduct = req.body;
+            const userId = req.user.userId;
             // const { title, description, } = req.body // destructring
 
             // check categoryId xem có tồn tại hay không ?
@@ -17,7 +18,8 @@ class ProductController {
 
             const product = await productModel.create({
                 ...newProduct,
-                category: newProduct.categoryId
+                category: newProduct.categoryId,
+                user: userId
             });
 
             // const newProduct = await productModel.create(req.body); // category
@@ -92,6 +94,7 @@ class ProductController {
 
             const [products, total] = await Promise.all([
                 productModel.find(filter)
+                    .populate('user')
                     .populate('category')
                     .sort({ createdAt: sortOrder })
                     .skip(skip)
